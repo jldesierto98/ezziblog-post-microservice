@@ -5,9 +5,13 @@ import com.eeezi.ezziblogrestapi.entity.Post;
 import com.eeezi.ezziblogrestapi.exception.ResourceNotFoundException;
 import com.eeezi.ezziblogrestapi.repository.PostRepository;
 import com.eeezi.ezziblogrestapi.request.PostRequest;
+import com.eeezi.ezziblogrestapi.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.response.PostResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,13 +61,25 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostResponse> getAllPosts() {
+    public PostPageResponse getAllPosts(Integer pageNo, Integer pageSize) {
 
-        List<Post> postList = postRepository.findAll();
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-       return postList.stream()
+        Page<Post> posts = postRepository.findAll(pageable);
+
+        List<PostResponse> content =  posts.stream()
                 .map(this::postResponseMapper)
                 .collect(Collectors.toList());
+
+        PostPageResponse postPageResponse = new PostPageResponse();
+        postPageResponse.setContent(content);
+        postPageResponse.setPageNo(posts.getNumber());
+        postPageResponse.setPageSize(posts.getSize());
+        postPageResponse.setTotalElement(posts.getTotalElements());
+        postPageResponse.setTotalPages(posts.getTotalPages());
+        postPageResponse.setLast(posts.isLast());
+
+        return postPageResponse;
 
     }
 

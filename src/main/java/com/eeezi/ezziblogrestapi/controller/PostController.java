@@ -2,6 +2,7 @@ package com.eeezi.ezziblogrestapi.controller;
 
 
 import com.eeezi.ezziblogrestapi.request.PostRequest;
+import com.eeezi.ezziblogrestapi.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.response.PostResponse;
 import com.eeezi.ezziblogrestapi.service.PostService;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,10 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPosts(){
-        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.FOUND);
+    public ResponseEntity<PostPageResponse> getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) Integer pageNo,
+                                                        @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+
+        return new ResponseEntity<>(postService.getAllPosts(pageNo, pageSize), HttpStatus.FOUND);
     }
 
     @PutMapping("/{id}")
