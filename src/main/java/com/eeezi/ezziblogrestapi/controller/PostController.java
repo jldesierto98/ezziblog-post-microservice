@@ -5,6 +5,7 @@ import com.eeezi.ezziblogrestapi.request.PostRequest;
 import com.eeezi.ezziblogrestapi.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.response.PostResponse;
 import com.eeezi.ezziblogrestapi.service.PostService;
+import com.eeezi.ezziblogrestapi.utils.AppConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,12 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<PostPageResponse> getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) Integer pageNo,
-                                                        @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+    public ResponseEntity<PostPageResponse> getAllPosts(@RequestParam(value = "pageNo", defaultValue = AppConstant.DEFAULT_PAGE_NUMBER, required = false) Integer pageNo,
+                                                        @RequestParam(value = "pageSize", defaultValue = AppConstant.DEFAULT_PAGE_SIZE, required = false) Integer pageSize,
+                                                        @RequestParam(value = "sortBy", defaultValue = AppConstant.DEFAULT_SORT_BY, required = false) String sortBy,
+                                                        @RequestParam(value = "sortDir", defaultValue = AppConstant.DEFAULT_SORT_DIRECTION, required = false) String sortDir){
 
-        return new ResponseEntity<>(postService.getAllPosts(pageNo, pageSize), HttpStatus.FOUND);
+        return new ResponseEntity<>(postService.getAllPosts(pageNo, pageSize, sortBy, sortDir), HttpStatus.FOUND);
     }
 
     @PutMapping("/{id}")
