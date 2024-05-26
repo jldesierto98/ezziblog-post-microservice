@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/posts")
 @AllArgsConstructor
 public class PostController {
 
@@ -29,9 +29,19 @@ public class PostController {
         return new ResponseEntity<>(postService.getPost(id), HttpStatus.FOUND);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<PostResponse>> getAllPosts(){
         return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.FOUND);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponse> updatePost(@RequestBody PostRequest postRequest, @PathVariable Long id){
+        return new ResponseEntity<>(postService.updatePost(postRequest, id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id){
+        return new ResponseEntity<>(postService.deletePost(id), HttpStatus.OK);
     }
 
 

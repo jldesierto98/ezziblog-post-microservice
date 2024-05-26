@@ -29,4 +29,21 @@ public interface PostService {
       * @return List<PostResponse>
       */
      List<PostResponse> getAllPosts();
+
+     /**
+      * Updates the current existing post.
+      *
+      * @param postRequest
+      * @param id
+      * @return PostResponse
+      */
+     PostResponse updatePost(PostRequest postRequest, Long id);
+
+     /**
+      * Deletes a Post by ID.
+      *
+      * @param id
+      * @return String
+      */
+     String deletePost(Long id);
 }

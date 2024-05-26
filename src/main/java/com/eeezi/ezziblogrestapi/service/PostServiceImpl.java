@@ -41,7 +41,7 @@ public class PostServiceImpl implements PostService{
         response.setDescription(savedPost.getDescription());
         response.setContent(savedPost.getContent());
 
-        log.info("====___ Post Created {}____===== Titlle : {}", LocalDateTime.now(), response.getTitle());
+        log.info("====___ Post Created {}____===== Title : {} ===== ID : {}", LocalDateTime.now(), response.getTitle(), response.getId());
         return response;
     }
 
@@ -65,6 +65,34 @@ public class PostServiceImpl implements PostService{
                 .map(this::postResponseMapper)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public PostResponse updatePost(PostRequest postRequest, Long id) {
+
+        // Get the required Post in the DB using the provided ID.
+        // If a Post with provided ID is not found, throw ResourceNotFoundException.
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id.toString()));
+
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
+        post.setDescription(postRequest.getDescription());
+
+        // Save the updated Post.
+        Post updatedPost =  postRepository.save(post);
+
+        return this.postResponseMapper(updatedPost);
+    }
+
+    @Override
+    public String deletePost(Long id) {
+
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id.toString()));
+
+        postRepository.deleteById(id);
+
+
+        return "Post entity deleted successfully.";
     }
 
     /**
