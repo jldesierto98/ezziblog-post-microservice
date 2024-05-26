@@ -29,7 +29,7 @@ public interface PostService {
       *
       * @return List<PostResponse>
       */
-     PostPageResponse getAllPosts(Integer pageNo, Integer pagSize);
+     PostPageResponse getAllPosts(Integer pageNo, Integer pagSize, String sortBy, String sortDir);
 
      /**
       * Updates the current existing post.
