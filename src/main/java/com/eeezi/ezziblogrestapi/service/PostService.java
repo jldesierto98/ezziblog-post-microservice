@@ -2,6 +2,7 @@ package com.eeezi.ezziblogrestapi.service;
 
 
 import com.eeezi.ezziblogrestapi.request.PostRequest;
+import com.eeezi.ezziblogrestapi.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.response.PostResponse;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface PostService {
       *
       * @return List<PostResponse>
       */
-     List<PostResponse> getAllPosts();
+     PostPageResponse getAllPosts(Integer pageNo, Integer pagSize);
 
      /**
       * Updates the current existing post.
