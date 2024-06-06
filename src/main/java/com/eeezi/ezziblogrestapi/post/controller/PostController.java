@@ -1,21 +1,19 @@
-package com.eeezi.ezziblogrestapi.controller;
+package com.eeezi.ezziblogrestapi.post.controller;
 
 
-import com.eeezi.ezziblogrestapi.request.PostRequest;
-import com.eeezi.ezziblogrestapi.response.PostPageResponse;
-import com.eeezi.ezziblogrestapi.response.PostResponse;
-import com.eeezi.ezziblogrestapi.service.PostService;
-import com.eeezi.ezziblogrestapi.utils.AppConstant;
+import com.eeezi.ezziblogrestapi.post.request.PostRequest;
+import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
+import com.eeezi.ezziblogrestapi.post.response.PostResponse;
+import com.eeezi.ezziblogrestapi.post.service.PostService;
+import com.eeezi.ezziblogrestapi.post.utils.AppConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 @AllArgsConstructor
 public class PostController {
 

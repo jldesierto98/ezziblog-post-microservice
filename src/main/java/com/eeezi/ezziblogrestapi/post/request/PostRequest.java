@@ -1,4 +1,4 @@
-package com.eeezi.ezziblogrestapi.request;
+package com.eeezi.ezziblogrestapi.post.request;
 
 import lombok.Getter;
 import lombok.Setter;

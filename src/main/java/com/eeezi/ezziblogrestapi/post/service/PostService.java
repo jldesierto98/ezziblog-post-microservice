@@ -1,11 +1,9 @@
-package com.eeezi.ezziblogrestapi.service;
+package com.eeezi.ezziblogrestapi.post.service;
 
 
-import com.eeezi.ezziblogrestapi.request.PostRequest;
-import com.eeezi.ezziblogrestapi.response.PostPageResponse;
-import com.eeezi.ezziblogrestapi.response.PostResponse;
-
-import java.util.List;
+import com.eeezi.ezziblogrestapi.post.request.PostRequest;
+import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
+import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 
 public interface PostService {
      /**

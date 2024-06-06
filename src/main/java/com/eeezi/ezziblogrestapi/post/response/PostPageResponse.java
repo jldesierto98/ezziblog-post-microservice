@@ -1,4 +1,4 @@
-package com.eeezi.ezziblogrestapi.response;
+package com.eeezi.ezziblogrestapi.post.response;
 
 import lombok.Data;
 
