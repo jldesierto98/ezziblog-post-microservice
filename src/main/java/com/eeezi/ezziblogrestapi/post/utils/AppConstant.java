@@ -1,4 +1,4 @@
-package com.eeezi.ezziblogrestapi.utils;
+package com.eeezi.ezziblogrestapi.post.utils;
 
 public class AppConstant {
 

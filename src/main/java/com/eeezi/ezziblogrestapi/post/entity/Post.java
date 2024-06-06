@@ -1,9 +1,13 @@
-package com.eeezi.ezziblogrestapi.entity;
+package com.eeezi.ezziblogrestapi.post.entity;
 
 
+import com.eeezi.ezziblogrestapi.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,4 +27,7 @@ public class Post {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Comment> comments = new HashSet<>();
 }

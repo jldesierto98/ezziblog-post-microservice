@@ -1,12 +1,12 @@
-package com.eeezi.ezziblogrestapi.service;
+package com.eeezi.ezziblogrestapi.post.service;
 
 
-import com.eeezi.ezziblogrestapi.entity.Post;
+import com.eeezi.ezziblogrestapi.post.entity.Post;
 import com.eeezi.ezziblogrestapi.exception.ResourceNotFoundException;
-import com.eeezi.ezziblogrestapi.repository.PostRepository;
-import com.eeezi.ezziblogrestapi.request.PostRequest;
-import com.eeezi.ezziblogrestapi.response.PostPageResponse;
-import com.eeezi.ezziblogrestapi.response.PostResponse;
+import com.eeezi.ezziblogrestapi.post.repository.PostRepository;
+import com.eeezi.ezziblogrestapi.post.request.PostRequest;
+import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
+import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
