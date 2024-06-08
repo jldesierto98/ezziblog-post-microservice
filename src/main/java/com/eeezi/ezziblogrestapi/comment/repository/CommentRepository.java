@@ -1,6 +1,5 @@
 package com.eeezi.ezziblogrestapi.comment.repository;
 
-import com.eeezi.ezziblogrestapi.comment.dto.CommentDto;
 import com.eeezi.ezziblogrestapi.comment.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
