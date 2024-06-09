@@ -9,6 +9,7 @@ import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
 
 
     @Override
@@ -122,12 +124,6 @@ public class PostServiceImpl implements PostService{
      * @return PostResponse
      */
     private PostResponse postResponseMapper(Post post){
-        PostResponse postResponse = new PostResponse();
-        postResponse.setId(post.getId());
-        postResponse.setContent(post.getContent());
-        postResponse.setDescription(post.getContent());
-        postResponse.setTitle(post.getTitle());
-
-        return postResponse;
+        return modelMapper.map(post, PostResponse.class);
     }
 }
