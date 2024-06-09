@@ -8,6 +8,7 @@ import com.eeezi.ezziblogrestapi.post.entity.Post;
 import com.eeezi.ezziblogrestapi.exception.ResourceNotFoundException;
 import com.eeezi.ezziblogrestapi.post.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public CommentDto createComment(Long postId, CommentDto commentDto) {
@@ -70,22 +72,21 @@ public class CommentServiceImpl implements CommentService{
     }
 
     private CommentDto mapToDto(Comment comment) {
-        CommentDto commentDto = new CommentDto();
-        commentDto.setId(comment.getId());
-        commentDto.setBody(comment.getBody());
-        commentDto.setEmail(comment.getEmail());
-        commentDto.setName(comment.getName());
-        return commentDto;
+//        CommentDto commentDto = new CommentDto();
+//        commentDto.setId(comment.getId());
+//        commentDto.setBody(comment.getBody());
+//        commentDto.setEmail(comment.getEmail());
+//        commentDto.setName(comment.getName());
+        return modelMapper.map(comment, CommentDto.class);
     }
 
     private Comment mapToEntity(CommentDto commentDto){
-        Comment comment = new Comment();
-        comment.setId(commentDto.getId());
-        comment.setBody(commentDto.getBody());
-        comment.setEmail(commentDto.getEmail());
-        comment.setName(commentDto.getName());
-
-        return comment;
+//        Comment comment = new Comment();
+//        comment.setId(commentDto.getId());
+//        comment.setBody(commentDto.getBody());
+//        comment.setEmail(commentDto.getEmail());
+//        comment.setName(commentDto.getName());
+        return modelMapper.map(commentDto, Comment.class);
     }
 
     /**
