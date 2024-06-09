@@ -1,6 +1,9 @@
 package com.eeezi.ezziblogrestapi.post.response;
 
+import com.eeezi.ezziblogrestapi.comment.dto.CommentDto;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class PostResponse {
@@ -12,4 +15,6 @@ public class PostResponse {
     private String description;
 
     private String content;
+
+    private Set<CommentDto> comments;
 }
