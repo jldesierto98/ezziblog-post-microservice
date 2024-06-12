@@ -48,5 +48,9 @@ public interface PostService {
       */
      String deletePost(Long id);
 
+     /**
+      * Exports all post into excel file.
+      * @return ByteArrayInputStream
+      */
      ByteArrayInputStream exportToExcel();
 }
