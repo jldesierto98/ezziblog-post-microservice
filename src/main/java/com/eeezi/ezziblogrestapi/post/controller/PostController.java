@@ -6,11 +6,17 @@ import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 import com.eeezi.ezziblogrestapi.post.service.PostService;
 import com.eeezi.ezziblogrestapi.post.utils.AppConstant;
+import com.eeezi.ezziblogrestapi.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayInputStream;
 
 @Controller
 @RequestMapping("/api/posts")
@@ -18,7 +24,10 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostService postService;
+    private final UserRepository userRepository;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<PostResponse> createPost(@RequestBody PostRequest request){
         return new ResponseEntity<>(postService.createPost(request), HttpStatus.CREATED);
@@ -38,6 +47,7 @@ public class PostController {
         return new ResponseEntity<>(postService.getAllPosts(pageNo, pageSize, sortBy, sortDir), HttpStatus.FOUND);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostResponse> updatePost(@RequestBody PostRequest postRequest, @PathVariable Long id){
         return new ResponseEntity<>(postService.updatePost(postRequest, id), HttpStatus.OK);
@@ -46,6 +56,15 @@ public class PostController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id){
         return new ResponseEntity<>(postService.deletePost(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportPost(){
+        ByteArrayInputStream excelFile = postService.exportToExcel();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=post_exports.xlsx")
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .body(excelFile.readAllBytes());
     }
 
 

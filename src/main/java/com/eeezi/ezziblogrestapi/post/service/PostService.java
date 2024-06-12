@@ -5,6 +5,8 @@ import com.eeezi.ezziblogrestapi.post.request.PostRequest;
 import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 
+import java.io.ByteArrayInputStream;
+
 public interface PostService {
      /**
       * Creates a Post from the Client and saves to DB.
@@ -45,4 +47,6 @@ public interface PostService {
       * @return String
       */
      String deletePost(Long id);
+
+     ByteArrayInputStream exportToExcel();
 }
