@@ -9,6 +9,10 @@ import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +21,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -126,4 +133,35 @@ public class PostServiceImpl implements PostService{
     private PostResponse postResponseMapper(Post post){
         return modelMapper.map(post, PostResponse.class);
     }
-}
+
+    @Override
+    public ByteArrayInputStream exportToExcel() {
+        List<Post> components = postRepository.findAll();
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Post Export Sheet");
+
+            // Header row
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Description");
+            headerRow.createCell(1).setCellValue("Content");
+            headerRow.createCell(2).setCellValue("Title");
+
+            // Data rows
+            int rowIdx = 1;
+            for (Post post : components) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(post.getDescription());
+                row.createCell(1).setCellValue(post.getContent());
+                row.createCell(2).setCellValue(post.getTitle());
+            }
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to create Excel file", e);
+        }
+    }
+    }
+
