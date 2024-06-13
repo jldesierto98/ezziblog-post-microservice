@@ -1,4 +1,4 @@
-package com.eeezi.ezziblogrestapi.users.service;
+package com.eeezi.ezziblogrestapi.security;
 
 import com.eeezi.ezziblogrestapi.users.entity.User;
 import com.eeezi.ezziblogrestapi.users.repository.UserRepository;
