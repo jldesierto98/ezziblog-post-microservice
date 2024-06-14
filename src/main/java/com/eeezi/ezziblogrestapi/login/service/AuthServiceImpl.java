@@ -3,6 +3,7 @@ package com.eeezi.ezziblogrestapi.login.service;
 import com.eeezi.ezziblogrestapi.exception.BlogAPIException;
 import com.eeezi.ezziblogrestapi.login.dto.LoginDto;
 import com.eeezi.ezziblogrestapi.login.dto.SignUpDto;
+import com.eeezi.ezziblogrestapi.security.JwtTokenProvider;
 import com.eeezi.ezziblogrestapi.users.entity.Role;
 import com.eeezi.ezziblogrestapi.users.entity.User;
 import com.eeezi.ezziblogrestapi.users.repository.RoleRepository;
@@ -26,6 +27,7 @@ import java.util.Set;
 public class AuthServiceImpl implements AuthService{
 
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
@@ -43,7 +45,9 @@ public class AuthServiceImpl implements AuthService{
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return LOGIN_SUCCESS;
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return token;
     }
 
     @Override

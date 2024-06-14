@@ -3,6 +3,7 @@ package com.eeezi.ezziblogrestapi.login.controller;
 import com.eeezi.ezziblogrestapi.login.dto.LoginDto;
 import com.eeezi.ezziblogrestapi.login.dto.SignUpDto;
 import com.eeezi.ezziblogrestapi.login.service.AuthService;
+import com.eeezi.ezziblogrestapi.security.dto.JWTAuthResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,12 @@ public class LoginController {
 
     @PostMapping(value = {"/login", "/signin"})
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
-        return new ResponseEntity<>(authService.login(loginDto), HttpStatus.ACCEPTED);
+        String token = authService.login(loginDto);
+
+        JWTAuthResponse response = new JWTAuthResponse();
+        response.setAccessToken(token);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(value = {"/signup", "/register"})
