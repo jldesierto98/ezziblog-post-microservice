@@ -1,6 +1,7 @@
 package com.eeezi.ezziblogrestapi.post.entity;
 
 
+import com.eeezi.ezziblogrestapi.category.entity.Category;
 import com.eeezi.ezziblogrestapi.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,4 +31,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
