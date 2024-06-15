@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ *  This service validates the User Credential request to the user records in the database.
+ *  Validates the user's credential from Client side.
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
