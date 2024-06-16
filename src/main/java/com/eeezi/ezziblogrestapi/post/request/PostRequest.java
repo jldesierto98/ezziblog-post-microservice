@@ -20,5 +20,9 @@ public class PostRequest {
     @NotNull
     @NotEmpty
     private String content;
+
+    @NotNull
+    @NotEmpty
+    private Long categoryId;
 }
 
