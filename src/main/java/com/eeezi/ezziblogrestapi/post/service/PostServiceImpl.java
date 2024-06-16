@@ -1,6 +1,9 @@
 package com.eeezi.ezziblogrestapi.post.service;
 
 
+import com.eeezi.ezziblogrestapi.category.dto.CategoryDto;
+import com.eeezi.ezziblogrestapi.category.entity.Category;
+import com.eeezi.ezziblogrestapi.category.service.CategoryService;
 import com.eeezi.ezziblogrestapi.post.entity.Post;
 import com.eeezi.ezziblogrestapi.exception.ResourceNotFoundException;
 import com.eeezi.ezziblogrestapi.post.repository.PostRepository;
@@ -36,16 +39,25 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     private final ModelMapper modelMapper;
+    private final CategoryService categoryService;
 
 
     @Override
     @Transactional
-    public PostResponse createPost(PostRequest post) {
-
+    public PostResponse createPost(PostRequest postRequest) {
+        //TODO : refactor code, use modelMapper instead of building the Post entity.
         Post postBuild = new Post();
-        postBuild.setTitle(post.getTitle());
-        postBuild.setDescription(post.getDescription());
-        postBuild.setContent(post.getContent());
+        postBuild.setTitle(postRequest.getTitle());
+        postBuild.setDescription(postRequest.getDescription());
+        postBuild.setContent(postRequest.getContent());
+
+        // Get category in DB.
+        CategoryDto categoryDto = categoryService.getCategoryById(postRequest.getCategoryId());
+
+        Category category = modelMapper.map(categoryDto, Category.class);
+
+        // Set category
+        postBuild.setCategory(category);
 
         Post savedPost = postRepository.save(postBuild);
 
