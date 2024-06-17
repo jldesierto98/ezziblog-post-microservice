@@ -175,5 +175,17 @@ public class PostServiceImpl implements PostService{
             throw new RuntimeException("Failed to create Excel file", e);
         }
     }
+
+
+    @Override
+    public List<PostResponse> getPostsByCategory(Long categoryId) {
+        List<Post> fetchedPosts = postRepository.findByCategoryId(categoryId);
+
+        List<PostResponse> mappedPosts = fetchedPosts.stream()
+                .map(post -> modelMapper.map(post, PostResponse.class))
+                .collect(Collectors.toList());
+
+        return mappedPosts;
+    }
 }
 

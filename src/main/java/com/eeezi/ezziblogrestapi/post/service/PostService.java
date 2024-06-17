@@ -6,6 +6,7 @@ import com.eeezi.ezziblogrestapi.post.response.PostPageResponse;
 import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 public interface PostService {
      /**
@@ -53,4 +54,12 @@ public interface PostService {
       * @return ByteArrayInputStream
       */
      ByteArrayInputStream exportToExcel();
+
+     /**
+      * Gets a List of PostResponse based on its category.
+      *
+      * @param categoryId
+      * @return List of PostResponse with categoryId.
+      */
+     List<PostResponse> getPostsByCategory(Long categoryId);
 }
