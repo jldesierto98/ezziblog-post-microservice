@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/posts")
@@ -37,6 +38,7 @@ public class PostController {
     public ResponseEntity<PostResponse> getPostById(@PathVariable Long id){
         return new ResponseEntity<>(postService.getPost(id), HttpStatus.FOUND);
     }
+
 
     @GetMapping
     public ResponseEntity<PostPageResponse> getAllPosts(@RequestParam(value = "pageNo", defaultValue = AppConstant.DEFAULT_PAGE_NUMBER, required = false) Integer pageNo,
@@ -65,6 +67,11 @@ public class PostController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=post_exports.xlsx")
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(excelFile.readAllBytes());
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<PostResponse>> getPostsByCategory(@PathVariable Long categoryId){
+        return new ResponseEntity<>(postService.getPostsByCategory(categoryId), HttpStatus.OK);
     }
 
 

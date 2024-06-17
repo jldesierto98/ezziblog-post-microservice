@@ -17,4 +17,6 @@ public class PostResponse {
     private String content;
 
     private Set<CommentDto> comments;
+
+    private Long categoryId;
 }
