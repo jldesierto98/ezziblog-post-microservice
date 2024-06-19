@@ -21,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/posts")
+@RestController
 @AllArgsConstructor
 public class PostController {
 
