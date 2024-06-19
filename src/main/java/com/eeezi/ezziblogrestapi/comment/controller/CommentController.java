@@ -13,6 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api")
+@RestController
 @AllArgsConstructor
 public class CommentController {
 
