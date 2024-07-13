@@ -7,6 +7,9 @@ import com.eeezi.ezziblogrestapi.post.response.PostResponse;
 import com.eeezi.ezziblogrestapi.post.service.PostService;
 import com.eeezi.ezziblogrestapi.post.utils.AppConstant;
 import com.eeezi.ezziblogrestapi.users.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,18 +26,37 @@ import java.util.List;
 @RequestMapping("/api/posts")
 @RestController
 @AllArgsConstructor
+@Tag(
+        name = "Rest APIs for Post Resources"
+)
 public class PostController {
 
     private final PostService postService;
     private final UserRepository userRepository;
 
-
+    @Operation(
+            summary = "Create Post REST API",
+            description = "Create Post REST API is used to record POST into database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Http Status 201 - CREATED"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<PostResponse> createPost(@RequestBody PostRequest request){
         return new ResponseEntity<>(postService.createPost(request), HttpStatus.CREATED);
     }
 
+
+    @Operation(
+            summary = "GET Post REST API",
+            description = "Gets a Post REST API by its ID"
+    )
+    @ApiResponse(
+            responseCode = "302",
+            description = "Http Status 302 - FOUND"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPostById(@PathVariable Long id){
         return new ResponseEntity<>(postService.getPost(id), HttpStatus.FOUND);
